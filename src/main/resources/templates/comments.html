@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="eng" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::title}, ~{::section})}"  xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="utf-8">
+  <title>Comment Tree Viewer</title>
+</head>
+<body>
+<section class="hero">
+  <div class="container">
+    <h1>Comment Tree Visualizer</h1>
+  </div>
+  <div class="container">
+    <ul>
+      <li th:each="comment: ${comments}">
+        <div th:replace="~{fragments/comment :: showComment(${comment})}"></div>
+      </li>
+    </ul>
+  </div>
+</section>
+</body>
+</html>
