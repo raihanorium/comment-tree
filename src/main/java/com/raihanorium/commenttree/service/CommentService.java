@@ -1,10 +1,8 @@
 package com.raihanorium.commenttree.service;
 
-import com.raihanorium.commenttree.dto.CommentDto;
-
-import java.util.List;
+import com.raihanorium.commenttree.dto.CommentTreeHolder;
 
 public interface CommentService {
 
-    List<CommentDto> getCommentTree();
+    CommentTreeHolder getCommentTree();
 }

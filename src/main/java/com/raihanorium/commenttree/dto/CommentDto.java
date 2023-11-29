@@ -18,5 +18,5 @@ public class CommentDto implements Serializable {
     private Integer id;
     private String comment;
     private LocalDateTime time;
-    private List<CommentDto> children;
+    private List<CommentDto> replies;
 }

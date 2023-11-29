@@ -1,4 +1,4 @@
-package com.raihanorium.commenttree.controller;
+package com.raihanorium.commenttree.util;
 
 public interface Views {
     String COMMENT = "comments";

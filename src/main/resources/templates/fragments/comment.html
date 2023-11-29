@@ -3,8 +3,8 @@
 <div class="comment" th:fragment="showComment(comment)">
     <p th:text="${comment.comment}">Comment</p>
 
-    <ul th:if="${comment.children != null && comment.children.size() > 0}">
-        <li th:each="reply: ${comment.children}">
+    <ul th:if="${comment.replies != null && comment.replies.size() > 0}">
+        <li th:each="reply: ${comment.replies}">
             <div th:replace="~{fragments/comment :: showComment(${reply})}"></div>
         </li>
     </ul>

@@ -12,10 +12,27 @@
   </div>
   <div class="container">
     <ul>
-      <li th:each="comment: ${comments}">
+      <li th:each="comment: ${lazyComments.getComments()}">
         <div th:replace="~{fragments/comment :: showComment(${comment})}"></div>
       </li>
     </ul>
+
+    <br>
+    <hr>
+
+    <table class="table table-bordered">
+      <tr>
+        <th>Lazy Loading</th><th>Eager Loading</th>
+      </tr>
+      <tr>
+        <td>Time Taken: <span th:text="${lazyComments.getExecutionTime()}">Time</span> ms.</td>
+        <td>Time Taken: <span th:text="${eagerComments.getExecutionTime()}">Time</span> ms.</td>
+      </tr>
+      <tr>
+        <td>Memory Used: <span th:text="${lazyComments.getMemoryUsed()}">Memory</span> bytes.</td>
+        <td>Memory Used: <span th:text="${eagerComments.getMemoryUsed()}">Memory</span> bytes.</td>
+      </tr>
+    </table>
   </div>
 </section>
 </body>
