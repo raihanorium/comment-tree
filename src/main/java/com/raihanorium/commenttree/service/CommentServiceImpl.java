@@ -1,6 +1,7 @@
 package com.raihanorium.commenttree.service;
 
 import com.raihanorium.commenttree.dto.CommentDto;
+import com.raihanorium.commenttree.mapper.CommentMapper;
 import com.raihanorium.commenttree.model.Comment;
 import com.raihanorium.commenttree.repository.CommentRepository;
 import jakarta.annotation.Nonnull;
@@ -19,32 +20,27 @@ public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
 
     @Override
-    public List<Comment> findTopOrderComments() {
-        return commentRepository.findAllByParentIdIsNull();
-    }
-
-    @Override
-    public List<CommentDto> findReplies(Comment comment) {
-        return commentRepository.findAllByParentId(comment.getId())
-                .stream().map(reply -> CommentDto.builder()
-                        .id(reply.getId())
-                        .comment(reply.getComment())
-                        .time(reply.getTime())
-                        .children(findReplies(reply))
-                        .build())
+    public List<CommentDto> getCommentTree() {
+        return findTopOrderComments().stream()
+                .map(comment -> {
+                    CommentDto commentDto = CommentMapper.INSTANCE.map(comment);
+                    commentDto.setChildren(findReplies(comment));
+                    return commentDto;
+                })
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public List<CommentDto> getCommentTree() {
-        return findTopOrderComments().stream()
-                .map(comment ->
-                        CommentDto.builder()
-                                .id(comment.getId())
-                                .comment(comment.getComment())
-                                .time(comment.getTime())
-                                .children(findReplies(comment))
-                                .build())
+    private List<Comment> findTopOrderComments() {
+        return commentRepository.findAllByParentIdIsNull();
+    }
+
+    private List<CommentDto> findReplies(Comment comment) {
+        return commentRepository.findAllByParentId(comment.getId())
+                .stream().map(reply -> {
+                    CommentDto commentDto = CommentMapper.INSTANCE.map(reply);
+                    commentDto.setChildren(findReplies(reply));
+                    return commentDto;
+                })
                 .collect(Collectors.toList());
     }
 }

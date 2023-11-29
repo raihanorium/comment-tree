@@ -1,9 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <div class="comment" th:fragment="showComment(comment)">
-  <p th:text="${comment.comment}">Comment</p>
+    <p th:text="${comment.comment}">Comment</p>
 
-  <ul th:if="${comment.children != null && comment.children.size() > 0}">
-    <li th:each="reply: ${comment.children}">
-      <div th:replace="~{fragments/comment :: showComment(${reply})}"></div>
-    </li>
-  </ul>
+    <ul th:if="${comment.children != null && comment.children.size() > 0}">
+        <li th:each="reply: ${comment.children}">
+            <div th:replace="~{fragments/comment :: showComment(${reply})}"></div>
+        </li>
+    </ul>
 </div>
+</html>

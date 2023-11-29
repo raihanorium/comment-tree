@@ -15,13 +15,15 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class CommentController {
 
+    private static final String ATTR_COMMENTS = "comments";
+
     @Nonnull
     private final CommentService commentService;
 
     @RequestMapping
     public String showComments(ModelMap modelMap) {
         List<CommentDto> topOrderComments = commentService.getCommentTree();
-        modelMap.addAttribute("comments", topOrderComments);
-        return "comments";
+        modelMap.addAttribute(ATTR_COMMENTS, topOrderComments);
+        return Views.COMMENT;
     }
 }
